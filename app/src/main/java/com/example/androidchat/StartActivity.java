@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,21 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class StartActivity extends AppCompatActivity {
 
-    MaterialButton login,register;
-    FirebaseUser firebaseUser;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        //sprawdzenie czy user jest pusty
-        if(firebaseUser != null) {
-            Intent intent = new Intent(StartActivity.this,MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
+    Button login,register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

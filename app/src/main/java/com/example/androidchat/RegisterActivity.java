@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     MaterialEditText username,email,password;
-    MaterialButton btn_register;
+    Button btn_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
