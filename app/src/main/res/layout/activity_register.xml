@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:text="Register"
             android:id="@+id/btn_register"
+            android:height="50dp"
             android:background="@drawable/roundedbutton"
             android:layout_marginTop="10dp"
             android:textColor="#fff"/>
