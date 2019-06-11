@@ -55,9 +55,10 @@
             android:layout_height="wrap_content"
             android:text="Login"
             android:id="@+id/btn_login"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/roundedbutton"
             android:layout_marginTop="10dp"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            />
 
     </LinearLayout>
 

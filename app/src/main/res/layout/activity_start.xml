@@ -23,14 +23,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:id="@+id/login"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/roundedbutton"
         android:layout_margin="25dp"
         android:textColor="#fff"
         android:text="login"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/roundedbutton"
         android:layout_margin="25dp"
         android:textColor="#fff"
         android:layout_marginTop="10dp"
