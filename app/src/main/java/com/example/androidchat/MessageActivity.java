@@ -1,15 +1,30 @@
 package com.example.androidchat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +41,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,13 +65,19 @@ public class MessageActivity extends AppCompatActivity {
 
     Intent intent;
 
-    ImageButton btn_send;
+    ImageButton btn_send, btn_send_photo;
     MaterialEditText text_send;
 
     MessageAdapter messageAdapter;
     List<Chat> _chat;
 
     RecyclerView recyclerView;
+
+    static final int REQUEST_CAPTURE_IMAGE = 1;
+    ImageView m_ivCaptureImage;
+    String imageFilePath;
+
+
 
 
 
@@ -79,6 +108,7 @@ public class MessageActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
+        btn_send_photo = findViewById(R.id.btn_send_photo);
 
         intent = getIntent();
         final String userid = intent.getStringExtra("userid");
@@ -94,6 +124,14 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(MessageActivity.this,"You can't send empty message",Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
+            }
+        });
+
+        //obsluga przycisku do zdjecia
+        btn_send_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -133,6 +171,17 @@ public class MessageActivity extends AppCompatActivity {
 
 
     }
+    private void sendPhoto(String sender, String receiver, ImageView photo) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender",sender);
+        hashMap.put("receiver",receiver);
+        hashMap.put("photo",photo);
+
+        reference.child("Chats").push().setValue(hashMap);
+    }
+
     private void readMessage(final String myid, final String userid, final String imageurl) {
         _chat = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Chats");
